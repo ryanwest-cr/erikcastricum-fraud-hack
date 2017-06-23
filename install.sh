@@ -5,7 +5,7 @@
 # ISPConfig 3 system installer
 #
 # Script: install.sh
-# Version: 2.2.3
+# Version: 2.2.4
 # Author: Matteo Temporini <temporini.matteo@gmail.com>
 # Description: This script will install all the packages needed to install
 # ISPConfig 3 on your server.
@@ -71,10 +71,11 @@ source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
 #    Run the installer
 #---------------------------------------------------------------------
 clear
-echo "Welcome to ISPConfig Setup Script v.2.2.3"
+
+echo "Welcome to ISPConfig Setup Script v.2.2.4"
 echo "This software is developed by Temporini Matteo"
 echo "with the support of the community."
-echo "You can visit my website at the followings URLS"
+echo "You can visit my website at the followings URLs"
 echo "http://www.servisys.it http://www.temporini.net"
 echo "and contact me with the following information"
 echo "contact email/hangout: temporini.matteo@gmail.com"
@@ -111,7 +112,7 @@ else
 	exit 1
 fi
 
-if [ "$DISTRO" == "debian-8" ]; then
+if [ "$DISTRO" == "debian8" ]; then
 	     while [ "x$CFG_ISPCVERSION" == "x" ]
           do
                 CFG_ISPCVERSION=$(whiptail --title "ISPConfig Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select ISPConfig Version you want to install" 10 50 2 "Stable" "(default)" ON "Beta" "" OFF 3>&1 1>&2 2>&3)
@@ -173,7 +174,7 @@ if [ -f /etc/debian_version ]; then
   echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:8080 or https://IP_ADDRESS:8080"
   echo "You can visit my GitHub profile at https://github.com/servisys/ispconfig_setup/"
   if [ "$CFG_WEBMAIL" == "roundcube" ]; then
-    if [ "$DISTRO" != "debian-8" ]; then
+    if [ "$DISTRO" != "debian8" ]; then
 		echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roudcube user, as the one you inserted in ISPconfig ${NC}"
 	fi
   fi
@@ -181,7 +182,7 @@ if [ -f /etc/debian_version ]; then
   	if [ "$CFG_PHPMYADMIN" == "yes" ]; then
   		echo "Phpmyadmin is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin or http://IP_ADDRESS:8081/phpmyadmin";
 	fi
-	if [ "$DISTRO" == "debian-8" ] && [ "$CFG_WEBMAIL" == "roundcube" ]; then
+	if [ "$DISTRO" == "debian8" ] && [ "$CFG_WEBMAIL" == "roundcube" ]; then
 		echo "Webmail is accessibile at  https://$CFG_HOSTNAME_FQDN/webmail or https://IP_ADDRESS/webmail";
 	else
 		echo "Webmail is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/webmail or http://IP_ADDRESS:8081/webmail";
@@ -189,12 +190,13 @@ if [ -f /etc/debian_version ]; then
   fi
 else 
 	if [ -f /etc/centos-release ]; then
-		echo "Attention pls, this is the very first version of the script for Centos 7"
-		echo "Pls use only for test pourpose for now."
+		echo "Attention please, this is the very first version of the script for CentOS 7"
+		echo "Please use only for test purpose for now."
 		echo -e "${red}Not yet implemented: courier, nginx support${NC}"
-		echo -e "${green}Yet implemented: apache, mysql, bind, postfix, dovecot, roudcube webmail support${NC}"
-		echo "Help us to test and implement, press ENTER if you understand what i'm talinkg about..."
+		echo -e "${green}Implemented: apache, mysql, bind, postfix, dovecot, roudcube webmail support${NC}"
+		echo "Help us to test and implement, press ENTER if you understand what I'm talking about..."
 		read DUMMY
+		source $PWD/distros/$DISTRO/install_mailman.sh
 		PreInstallCheck
 		AskQuestions 
 		InstallBasics 
@@ -213,10 +215,13 @@ else
 			InstallJailkit 
 	    fi
 		InstallFail2ban 
+		if [ "$CFG_METRONOM" == "yes" ]; then
+			InstallMetronom 
+		fi
 		InstallWebmail 
 		InstallISPConfig
 		#InstallFix
-		echo -e "${green}Well done ISPConfig installed and configured correctly :D ${NC}"
+		echo -e "${green}Well done! ISPConfig installed and configured correctly :D ${NC}"
 		echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:8080 or https://IP_ADDRESS:8080"
 		echo "You can visit my GitHub profile at https://github.com/servisys/ispconfig_setup/"
 		echo -e "${red}If you setup Roundcube webmail go to http://$CFG_HOSTNAME_FQDN/roundcubemail/installer and configure db connection${NC}"

@@ -21,10 +21,11 @@ InstallWebServer() {
 	</IfModule>" | tee /etc/apache2/conf-available/httpoxy.conf > /dev/null 2>&1
 	
 	if [ "$CFG_PHPMYADMIN" == "yes" ]; then
-		echo "==========================================================================================="
-		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
+		echo "============================================================================================"
+		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'Yes'"
+		echo "Attention: When asked 'MySQL application password for phpmyadmin:' press <enter>"
 		echo "Due to a bug in dbconfig-common, this can't be automated."
-		echo "==========================================================================================="
+		echo "============================================================================================"
 		echo "Press ENTER to continue... "
 		read DUMMY
 		echo -n "Installing phpMyAdmin... "
@@ -67,10 +68,11 @@ InstallWebServer() {
 	echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
 	
 	if [ "$CFG_PHPMYADMIN" == "yes" ]; then
-		echo "==========================================================================================="
-		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
+		echo "============================================================================================"
+		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'Yes'"
+		echo "Attention: When asked 'MySQL application password for phpmyadmin:' press <enter>"
 		echo "Due to a bug in dbconfig-common, this can't be automated."
-		echo "==========================================================================================="
+		echo "============================================================================================"
 		echo "Press ENTER to continue... "
 		read DUMMY
 		echo -n "Installing phpMyAdmin... "

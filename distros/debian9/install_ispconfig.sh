@@ -4,17 +4,9 @@
 #---------------------------------------------------------------------
 InstallISPConfig() {
   echo "Installing ISPConfig3... "
-  cd /tmp
-  if [ $CFG_ISPCVERSION == "Beta" ]; then
-	wget -O ISPConfig-3.1-beta.tar.gz  http://www.ispconfig.org/downloads/ISPConfig-3.1b2.tar.gz
-	tar xfz ISPConfig-3.1-beta.tar.gz
-	cd ispconfig3_install*
-	cd install
-  else
-	wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
-	tar xfz ISPConfig-3-stable.tar.gz
-	cd ispconfig3_install/install/
-  fi
+  cd /root
+  git clone https://git.ispconfig.org/ispconfig/ispconfig3.git -b stable-3.1
+  cd ispconfig3/install/
   if [ $CFG_ISPC == "standard" ]; then
   	echo "Create INI file"
 	touch autoinstall.ini

@@ -15,8 +15,10 @@ InstallWebmail() {
 	read DUMMY
 	apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins roundcube-plugins-extra javascript-common libjs-jquery-mousewheel php-net-sieve tinymce
 	sed -i "s|^\(\$config\['default_host'\] =\).*$|\1 \'localhost\';|" /etc/roundcube/config.inc.php
-	ln -s /usr/share/roundcube /usr/share/squirrelmail
-
+        if [ $CFG_WEBSERVER == "apache" ]; then
+              echo "Alias /webmail /var/lib/roundcube" >> /etc/apache2/conf-enabled/roundcube.conf
+              service apache2 reload
+        fi
   fi
 }
 

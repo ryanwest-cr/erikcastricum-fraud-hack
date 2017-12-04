@@ -4,9 +4,10 @@
 #---------------------------------------------------------------------
 InstallISPConfig() {
   echo "Installing ISPConfig3... "
-  cd /root
-  git clone https://git.ispconfig.org/ispconfig/ispconfig3.git -b stable-3.1
-  cd ispconfig3/install/
+  cd /tmp
+  wget https://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
+  tar xfz ISPConfig-3-stable.tar.gz
+  cd ispconfig3_install/install/
   if [ "$CFG_ISPC" == "standard" ]; then
   	  echo "Create INI file"
 	  touch autoinstall.ini
@@ -24,7 +25,7 @@ InstallISPConfig() {
 	  else
 		echo "http_server=nginx" >> autoinstall.ini
 	  fi
-	  echo "ispconfig_port=8443" >> autoinstall.ini
+	  echo "ispconfig_port=8080" >> autoinstall.ini
 	  echo "ispconfig_use_ssl=y" >> autoinstall.ini
 	  echo
 	  echo "[ssl_cert]" >> autoinstall.ini
@@ -61,7 +62,7 @@ InstallISPConfig() {
 	  echo "mysql_master_database=dbispconfig" >> autoinstall.ini
 	  echo "reconfigure_permissions_in_master_database=no" >> autoinstall.ini
 	  echo "reconfigure_services=yes" >> autoinstall.ini
-	  echo "ispconfig_port=8443" >> autoinstall.ini
+	  echo "ispconfig_port=8080" >> autoinstall.ini
 	  echo "create_new_ispconfig_ssl_cert=no" >> autoinstall.ini
 	  echo "reconfigure_crontab=yes" >> autoinstall.ini
 	  echo | php -q install.php --autoinstall=autoinstall.ini
@@ -69,9 +70,9 @@ InstallISPConfig() {
 	  php -q install.php
   fi
   if [ "$CFG_WEBSERVER" == "nginx" ]; then
-        service nginx restart
+        /etc/init.d/nginx restart
   else
-        service apache2 restart
+        /etc/init.d/apache2 restart
   fi
 
 }

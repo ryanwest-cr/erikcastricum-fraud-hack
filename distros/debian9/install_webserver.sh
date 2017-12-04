@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-# Function: InstallWebServer Debian 8
+# Function: InstallWebServer Debian 9
 #    Install and configure Apache2, php + modules
 #---------------------------------------------------------------------
 InstallWebServer() {
@@ -15,7 +15,7 @@ InstallWebServer() {
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing PHP and Modules... "
 	# Need to check if soemthing is asked before suppress messages
-	apt-get -y install php7.0 php7.0-common php7.0-gd php7.0-mysql php7.0-imap php7.0-cli php7.0-cgi php-pear php7.0-mcrypt php7.0-curl php7.0-intl php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-zip php7.0-mbstring php7.0-imap php7.0-mcrypt php7.0-snmp php7.0-xmlrpc php7.0-xsl  > /dev/null 2>&1
+	apt-get -y install php7.0 php7.0-common php7.0-gd php7.0-mysql php7.0-imap php7.0-cli php7.0-cgi php-pear php7.0-mcrypt php7.0-curl php7.0-intl php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-zip php7.0-mbstring php7.0-imap php7.0-mcrypt php7.0-snmp php7.0-xmlrpc php7.0-xsl  > /dev/null 2>&1
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing PHP-FPM"
 	#Need to check if soemthing is asked before suppress messages
@@ -30,12 +30,6 @@ InstallWebServer() {
     	echo -e "[${green}DONE${NC}]\n"
 	
   if [ $CFG_PHPMYADMIN == "yes" ]; then
-	echo "==========================================================================================="
-	echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
-	echo "Due to a bug in dbconfig-common, this can't be automated."
-	echo "==========================================================================================="
-	echo "Press ENTER to continue... "
-	read DUMMY
 	echo -n "Installing phpMyAdmin... "
 	apt-get -y install phpmyadmin
 	echo -e "[${green}DONE${NC}]\n"
@@ -75,7 +69,7 @@ InstallWebServer() {
 	echo -e "[${green}DONE${NC}]\n"
 	
 	echo -n "Installing Lets Encrypt... "	
-	apt-get -yqq apt-get install certbot > /dev/null 2>&1
+	apt-get -yqq install certbot > /dev/null 2>&1
 	echo -e "[${green}DONE${NC}]\n"
   
     echo -n "Install PHP Opcode Cache "	
@@ -87,34 +81,40 @@ InstallWebServer() {
   CFG_NGINX=y
   CFG_APACHE=n
 	echo -n "Installing NGINX and Modules... "
-	service apache2 stop
-	update-rc.d -f apache2 remove
 	apt-get -yqq install nginx > /dev/null 2>&1
 	service nginx start 
-	apt-get -yqq install php5-fpm php5-mysqlnd php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-memcached php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl memcached php-apc > /dev/null 2>&1
-	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini
-	sed -i "s/;date.timezone =/date.timezone=\"Europe\/Amsterdam\"/" /etc/php5/fpm/php.ini
+	apt-get -yqq install php7.0 php7.0-common php7.0-gd php7.0-mysql php7.0-imap php7.0-cli php7.0-cgi php-pear php7.0-mcrypt php7.0-curl php7.0-intl php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-zip php7.0-mbstring php7.0-imap php7.0-mcrypt php7.0-snmp php7.0-xmlrpc php7.0-xsl > /dev/null 2>&1
+	#Need to check if soemthing is asked before suppress messages
+	apt-get -y install php7.0-fpm
+	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
+	sed -i "s/;date.timezone =/date.timezone=\"Europe\/Amsterdam\"/" /etc/php/7.0/fpm/php.ini
 	echo -n "Installing needed Programs for PHP and NGINX... "
 	apt-get -yqq install mcrypt imagemagick memcached curl tidy snmp > /dev/null 2>&1
-	#sed -i "s/#/;/" /etc/php5/conf.d/ming.ini
-	service php5-fpm reload
+	service php7.0-fpm reload
 	apt-get -yqq install fcgiwrap
   
   if [ $CFG_PHPMYADMIN == "yes" ]; then
-	echo "==========================================================================================="
-	echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
-	echo "Due to a bug in dbconfig-common, this can't be automated."
-	echo "==========================================================================================="
-	echo "Press ENTER to continue... "
-	read DUMMY
 	echo -n "Installing phpMyAdmin... "
 	apt-get -y install phpmyadmin
 	echo -e "[${green}DONE${NC}]\n"
   fi
-  
-  	echo -n "Installing Lets Encrypt... "	
-	apt-get -yqq install certbot -t jessie-backports
-	certbot &
+
+   
+    if [ $CFG_PHP56 == "yes" ]; then
+		echo "Installing PHP 5.6"
+		apt-get -yqq install apt-transport-https
+		curl https://packages.sury.org/php/apt.gpg | apt-key add -  > /dev/null 2>&1
+		echo 'deb https://packages.sury.org/php/ stretch main' > /etc/apt/sources.list.d/deb.sury.org.list
+		apt-get update  > /dev/null 2>&1
+		apt-get -yqq install php5.6 php5.6-common php5.6-gd php5.6-mysql php5.6-imap php5.6-cli php5.6-cgi php5.6-mcrypt php5.6-curl php5.6-intl php5.6-pspell php5.6-recode php5.6-sqlite3 php5.6-tidy php5.6-xmlrpc php5.6-xsl php5.6-zip php5.6-mbstring php5.6-fpm
+		echo -e "Package: *\nPin: origin packages.sury.org\nPin-Priority: 100" > /etc/apt/preferences.d/deb-sury-org
+	fi  
+	echo -n "Installing Lets Encrypt... "	
+	apt-get -yqq install certbot > /dev/null 2>&1
+	echo -e "[${green}DONE${NC}]\n"
+	
+	echo -n "Install PHP Opcode Cache "	
+    apt-get -yqq install php7.0-opcache php-apcu > /dev/null 2>&1
 	echo -e "[${green}DONE${NC}]\n"
   
   fi

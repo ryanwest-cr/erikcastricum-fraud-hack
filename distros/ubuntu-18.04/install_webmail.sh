@@ -14,7 +14,7 @@ InstallWebmail() {
 	echo "Press ENTER to continue... "
 	read DUMMY
 	echo -n "Installing Roundcube... "
-	apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins roundcube-plugins-extra javascript-common libjs-jquery-mousewheel php-net-sieve tinymce
+	apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins javascript-common libjs-jquery-mousewheel php-net-sieve tinymce
 	sed -i "s|^\(\$config\['default_host'\] =\).*$|\1 \'localhost\';|" /etc/roundcube/config.inc.php
         if [ $CFG_WEBSERVER == "apache" ]; then
               echo "Alias /webmail /var/lib/roundcube" >> /etc/apache2/conf-enabled/roundcube.conf

@@ -105,7 +105,7 @@ fi
 if [[ $CFG_HOSTNAME_FQDN =~ $RE ]] || ! [[ $CFG_HOSTNAME_FQDN =~ $RE1 && $CFG_HOSTNAME_FQDN =~ $RE2 ]]; then
 	echo "The IP address is: ${IP_ADDRESS[0]}."
 	# Source: https://www.faqforge.com/linux/which-ports-are-used-on-a-ispconfig-3-server-and-shall-be-open-in-the-firewall/
-	echo -e "${yellow}Warning: If this system is connected to a router and/or behind a NAT, please be sure that the private (internal) IP address is static before continuing.${NC} For routers, static internal IP addresses are usually assigned via DHCP reservation. See your routers user guide for more info… You will also need to forward some ports depending on what software you choose to install:\n\tTCP Ports\n\t\t20\t- FTP\n\t\t21\t- FTP\n\t\t22\t- SSH/SFTP\n\t\t25\t- Mail (SMTP)\n\t\t53\t- DNS\n\t\t80\t- Web (HTTP)\n\t\t110\t- Mail (POP3)\n\t\t143\t- Mail (IMAP)\n\t\t443\t- Web (HTTPS)\n\t\t465\t- Mail (SMTPS)\n\t\t587\t- Mail (SMTP)\n\t\t993\t- Mail (IMAPS)\n\t\t995\t- Mail (POP3S)\n\t\t3306\t- Database\n\t\t5222\t- Chat (XMPP)\n\t\t8080\t- ISPConfig\n\t\t8081\t- ISPConfig\n\t\t10000\t- ISPConfig\n\n\tUDP Ports\n\t\t53\t- DNS\n\t\t3306\t- Database\n" | fold -s -w "$COLUMNS"
+	echo -e "${yellow}Warning: If this system is connected to a router and/or behind a NAT, please be sure that the private (internal) IP address is static before continuing.${NC} For routers, static internal IP addresses are usually assigned via DHCP reservation. See your routers user guide for more info… You will also need to forward some ports depending on what software you choose to install:\n\tTCP Ports\n\t\t20\t- FTP\n\t\t21\t- FTP\n\t\t22\t- SSH/SFTP\n\t\t25\t- Mail (SMTP)\n\t\t53\t- DNS\n\t\t80\t- Web (HTTP)\n\t\t110\t- Mail (POP3)\n\t\t143\t- Mail (IMAP)\n\t\t443\t- Web (HTTPS)\n\t\t465\t- Mail (SMTPS)\n\t\t587\t- Mail (SMTP)\n\t\t993\t- Mail (IMAPS)\n\t\t995\t- Mail (POP3S)\n\t\t3306\t- Database\n\t\t5222\t- Chat (XMPP)\n\t\t8443\t- ISPConfig\n\t\t8081\t- ISPConfig\n\t\t10000\t- ISPConfig\n\n\tUDP Ports\n\t\t53\t- DNS\n\t\t3306\t- Database\n" | fold -s -w "$COLUMNS"
 	# read -p "Would you like to update the hostname for this system? (recommended) (y/n) " -n 1 -r
 	echo -n "Would you like to update the hostname for this system? (recommended) (y/n) "
 	read -n 1 -r
@@ -308,7 +308,7 @@ if [ -f /etc/debian_version ]; then
 	InstallISPConfig
 	InstallFix
 	echo -e "\n${green}Well done! ISPConfig installed and configured correctly :D${NC} 😃"
-	echo -e "\nNow you can access to your ISPConfig installation at: ${underlined}https://$CFG_HOSTNAME_FQDN:8080${NC} or ${underlined}https://${IP_ADDRESS[0]}:8080${NC}"
+	echo -e "\nNow you can access to your ISPConfig installation at: ${underlined}https://$CFG_HOSTNAME_FQDN:8443${NC} or ${underlined}https://${IP_ADDRESS[0]}:8443${NC}"
 	echo -e "The default ISPConfig Username is: ${bold}admin${NC}\n\t      and the Password is: ${bold}admin${NC}"
 	echo -e "${yellow}Warning: This is a security risk. Please change the default password after your first login.${NC}"
 	
@@ -365,7 +365,7 @@ elif [ -f /etc/redhat-release ]; then # /etc/centos-release
 	#InstallFix
 	echo -e "\n\n"
 	echo -e "\n${green}Well done! ISPConfig installed and configured correctly :D${NC} 😃"
-	echo -e "\nNow you can access to your ISPConfig installation at: ${underlined}https://$CFG_HOSTNAME_FQDN:8080${NC} or ${underlined}https://${IP_ADDRESS[0]}:8080${NC}"
+	echo -e "\nNow you can access to your ISPConfig installation at: ${underlined}https://$CFG_HOSTNAME_FQDN:8443${NC} or ${underlined}https://${IP_ADDRESS[0]}:8443${NC}"
 	echo -e "The default ISPConfig Username is: ${bold}admin${NC}\n\t      and the Password is: ${bold}admin${NC}"
 	echo -e "${yellow}Warning: This is a security risk. Please change the default password after your first login.${NC}"
 	echo -e "\n${red}If you setup Roundcube webmail go to: http://$CFG_HOSTNAME_FQDN/roundcubemail/installer and configure db connection${NC}"

@@ -5,8 +5,8 @@
 PreInstallCheck() {
 	echo -n "Preparing to install... "
 	# Check source.list
-	sed -i 's/main/main restricted universe multiverse/' /etc/apt/sources.list;
-	echo "deb http://archive.ubuntu.com/ubuntu bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list;
+	#sed -i 's/main/main restricted universe multiverse/' /etc/apt/sources.list;
+	echo "deb http://archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse" >> /etc/apt/sources.list;
 	#contrib=$(cat /etc/apt/sources.list | grep contrib | grep -v "cdrom")
 	#nonfree=$(cat /etc/apt/sources.list | grep non-free | grep -v "cdrom")
 	#if [ -z "$contrib" ]; then

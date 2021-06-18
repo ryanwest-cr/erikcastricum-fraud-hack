@@ -5,7 +5,7 @@
 InstallISPConfig() {
   echo "Installing ISPConfig3... "
   cd /root
-  git clone https://git.castricum.nu/erikcas/ispconfig3.git -b stable-3.1
+  git clone https://git.cas-online.nl/erikcas/ispconfig3.git -b stable-3.1
   cd ispconfig3/install/
   if [ "$CFG_ISPC" == "standard" ]; then
   	  echo "Create INI file"

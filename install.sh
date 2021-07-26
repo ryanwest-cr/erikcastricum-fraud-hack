@@ -138,7 +138,7 @@ source $APWD/distros/$DISTRO/askquestions.sh
 
 source $APWD/distros/$DISTRO/install_basics.sh
 source $APWD/distros/$DISTRO/install_postfix.sh
-source $APWD/distros/$DISTRO/install_mysql.sh
+#source $APWD/distros/$DISTRO/install_mysql.sh
 source $APWD/distros/$DISTRO/install_mta.sh
 source $APWD/distros/$DISTRO/install_antivirus.sh
 source $APWD/distros/$DISTRO/install_webserver.sh

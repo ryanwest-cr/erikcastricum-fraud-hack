@@ -29,10 +29,10 @@ InstallWebServer() {
     echo -e "[${green}DONE${NC}]\n"
 	
   if [ "$CFG_PHPMYADMIN" == "yes" ]; then
-	echo "==========================================================================================="
-	echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
+	echo "============================================================================================"
+	echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'YES'"
 	echo "Due to a bug in dbconfig-common, this can't be automated."
-	echo "==========================================================================================="
+	echo "============================================================================================"
 	echo "Press ENTER to continue... "
 	read DUMMY
 	echo -n "Installing phpMyAdmin... "

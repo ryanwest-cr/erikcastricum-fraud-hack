@@ -170,6 +170,13 @@ CheckLinux() {
 		
 		elif echo "$VERSION_ID" | grep -iq "20.04"; then
 			DISTRO=ubuntu-20.04
+
+                #---------------------------------------------------------------------
+                #       Ubuntu 22.04
+                #---------------------------------------------------------------------
+
+                elif echo "$VERSION_ID" | grep -iq "22.04"; then
+                        DISTRO=ubuntu-22.04
 		fi
 	
 	elif echo "$ID" | grep -iq "centos"; then

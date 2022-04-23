@@ -64,7 +64,17 @@ InstallWebServer() {
 	echo -n "Restarting Apache... "
 	service apache2 restart
 	echo -e "[${green}DONE${NC}]\n"
-  
+
+        echo -n "Disabling HTTP_PROXY... "
+        echo "<IfModule mod_headers.c>" >> /etc/apache2/conf-available/httpoxy.conf
+        echo "     RequestHeader unset Proxy early" >> /etc/apache2/conf-available/httpoxy.conf
+        echo "</IfModule>" >> /etc/apache2/conf-available/httpoxy.conf
+        a2enconf httpoxy > /dev/null 2>&1
+        echo -e "[${green}DONE${NC}]\n"
+        echo -n "Restarting Apache... "
+        systemctl restart apache2
+        echo -e "[${green}DONE${NC}]\n"
+
   elif [ "$CFG_WEBSERVER" == "nginx" ]; then
 	CFG_NGINX=y
 	CFG_APACHE=n	

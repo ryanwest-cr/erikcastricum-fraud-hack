@@ -15,14 +15,14 @@ InstallWebServer() {
 	apt_install apache2 apache2-doc apache2-utils libapache2-mod-php libapache2-mod-fcgid apache2-suexec-pristine libruby libapache2-mod-python
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing PHP and modules... "
-	# apt_install php7.4 php7.4-common php7.4-gd php7.4-mysql php7.4-imap php7.4-cli php7.4-cgi php-pear mcrypt imagemagick libruby php7.4-curl php7.4-intl php7.4-pspell  php7.4-sqlite3 php7.4-tidy php7.4-xmlrpc php7.4-xsl memcached php-memcache php-imagick  php7.4-zip php7.4-mbstring php7.4-fpm php7.4-opcache php-apcu
-	apt_install php7.4 php7.4-common php7.4-gd php7.4-mysql php7.4-imap php7.4-cli php7.4-cgi php-pear php7.4-curl php7.4-intl php7.4-pspell  php7.4-sqlite3 php7.4-tidy php7.4-xmlrpc php7.4-xsl php-memcache php-imagick  php7.4-zip php7.4-mbstring php-soap php7.4-soap
+	# apt_install php8.1 php8.1-common php8.1-gd php8.1-mysql php8.1-imap php8.1-cli php8.1-cgi php-pear mcrypt imagemagick libruby php8.1-curl php8.1-intl php8.1-pspell  php8.1-sqlite3 php8.1-tidy php8.1-xmlrpc php8.1-xsl memcached php-memcache php-imagick  php8.1-zip php8.1-mbstring php8.1-fpm php8.1-opcache php-apcu
+	apt_install php8.1 php8.1-common php8.1-gd php8.1-mysql php8.1-imap php8.1-cli php8.1-cgi php-pear php8.1-curl php8.1-intl php8.1-pspell  php8.1-sqlite3 php8.1-tidy php8.1-xmlrpc php8.1-xsl php-memcache php-imagick  php8.1-zip php8.1-mbstring php-soap php8.1-soap
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing Opcache and APCu... "
-	apt_install php7.4-opcache php-apcu
+	apt_install php8.1-opcache php-apcu
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing PHP-FPM... "
-	apt_install php7.4-fpm
+	apt_install php8.1-fpm
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing needed programs for PHP and Apache (mcrypt, etc.)... "
 	apt_install mcrypt imagemagick memcached curl tidy snmp
@@ -74,18 +74,18 @@ InstallWebServer() {
 	apt_install nginx
 	service nginx start
 	echo -e "[${green}DONE${NC}]\n"
-	# apt_install php7.4 php7.4-common php7.4-gd php7.4-mysql php7.4-imap php7.4-cli php7.4-cgi php-pear php-auth php7.4-mcrypt mcrypt imagemagick libruby php7.4-curl php7.4-intl php7.4-pspell  php7.4-sqlite3 php7.4-tidy php7.4-xmlrpc php7.4-xsl memcached php-memcache php-imagick  php7.4-zip php7.4-mbstring php7.4-fpm php7.4-opcache php-apcu
+	# apt_install php8.1 php8.1-common php8.1-gd php8.1-mysql php8.1-imap php8.1-cli php8.1-cgi php-pear php-auth php8.1-mcrypt mcrypt imagemagick libruby php8.1-curl php8.1-intl php8.1-pspell  php8.1-sqlite3 php8.1-tidy php8.1-xmlrpc php8.1-xsl memcached php-memcache php-imagick  php8.1-zip php8.1-mbstring php8.1-fpm php8.1-opcache php-apcu
 	echo -n "Installing PHP-FPM... "
-	apt_install php7.4-fpm
+	apt_install php8.1-fpm
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing PHP and modules... "
-	apt_install php7.4 php7.4-common php7.4-gd php7.4-mysql php7.4-imap php7.4-cli php7.4-cgi php-pear mcrypt imagemagick libruby php7.4-curl php7.4-intl php7.4-pspell  php7.4-sqlite3 php7.4-tidy php7.4-xmlrpc php7.4-xsl memcached php-memcache php-imagick  php7.4-zip php7.4-mbstring php-soap php7.4-soap
-	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.4/fpm/php.ini
+	apt_install php8.1 php8.1-common php8.1-gd php8.1-mysql php8.1-imap php8.1-cli php8.1-cgi php-pear mcrypt imagemagick libruby php8.1-curl php8.1-intl php8.1-pspell  php8.1-sqlite3 php8.1-tidy php8.1-xmlrpc php8.1-xsl memcached php-memcache php-imagick  php8.1-zip php8.1-mbstring php-soap php8.1-soap
+	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/8.1/fpm/php.ini
 	TIME_ZONE=$(echo "$TIME_ZONE" | sed -n 's/ (.*)$//p')
-	sed -i "s/;date.timezone =/date.timezone=\"${TIME_ZONE//\//\\/}\"/" /etc/php/7.4/fpm/php.ini
+	sed -i "s/;date.timezone =/date.timezone=\"${TIME_ZONE//\//\\/}\"/" /etc/php/8.1/fpm/php.ini
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Reloading PHP-FPM... "
-	service php7-fpm reload
+	service php8-fpm reload
 	echo -e "[${green}DONE${NC}]\n"
 	echo -n "Installing fcgiwrap... "
 	apt_install fcgiwrap

@@ -11,8 +11,8 @@ InstallBasics() {
   echo -e "[${green}DONE${NC}]\n"
 
   echo -n "Installing basic packages (OpenSSH server, NTP, binutils, etc.)... "
-  # apt_install ssh openssh-server vim-nox php7.4-cli ntp ntpdate debconf-utils binutils sudo git lsb-release
-  apt_install ssh openssh-server vim-nox php7.4-cli ntp debconf-utils binutils sudo git lsb-release
+  # apt_install ssh openssh-server vim-nox php8.1-cli ntp ntpdate debconf-utils binutils sudo git lsb-release
+  apt_install ssh openssh-server vim-nox php8.1-cli ntp debconf-utils binutils sudo git lsb-release
   echo -e "[${green}DONE${NC}]\n"
   echo -n "Stopping AppArmor... "
   service apparmor stop 
